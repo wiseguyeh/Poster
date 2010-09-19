@@ -1,0 +1,29 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ output extension=".cs" #>
+<#@ assembly name="System.Core.dll" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Linq" #>
+<# String[] toExclude = {"Entity"}; #>
+using System;
+using NHibernate;
+using Poster.Models.Entities;
+
+//THIS FILE HAS BEEN AUTOMATICALLY GENERATED, DO NOT MODIFY 
+//generated @ <#= DateTime.Now #>
+namespace Poster.Models.Dao.NHibernate
+{
+<# foreach (var entityName in 
+	Directory.GetFiles(this.Host.ResolvePath("..\\..\\Entities\\"))
+		.Select(x => Path.GetFileNameWithoutExtension(x))
+		.Except(toExclude)
+	) { 
+#>
+	///<summary>
+	/// NHibernate implementation of the I<#= entityName #>Dao.
+	///</summary>
+	public partial class <#= entityName #>Dao : NHibernateBaseDao<<#= entityName #>>, I<#= entityName #>Dao
+	{
+	}
+
+<# } #>
+}
